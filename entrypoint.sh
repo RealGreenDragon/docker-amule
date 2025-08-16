@@ -55,7 +55,7 @@ mod_auto_share() {
         # Share all the directories (separated by semicolon ';') and subdirectories in aMule.
         printf "[MOD_AUTO_SHARE] Sharing the following directories with sub-directories: %s ... You can disable this mod with MOD_AUTO_SHARE_ENABLED=false\n" "$MOD_AUTO_SHARE_DIRECTORIES"
         SHAREDDIR_CONF=${AMULE_HOME}/shareddir.dat
-        printf "/incoming\n" > "$SHAREDDIR_CONF"
+        > "$SHAREDDIR_CONF"
         iter=""
         IN="$MOD_AUTO_SHARE_DIRECTORIES"
         while [ "$IN" != "$iter" ] ;do
@@ -64,6 +64,9 @@ mod_auto_share() {
             printf "[MOD_AUTO_SHARE] Sharing directory '%s' with sub-directories...\n" "$iter"
             find "$iter" -type d >> "$SHAREDDIR_CONF"
         done
+        if ! grep -q "^/incoming$" "$SHAREDDIR_CONF" ; then
+            printf "/incoming\n" >> "$SHAREDDIR_CONF"
+        fi
         chown ${AMULE_USER}:${AMULE_GROUP} "$SHAREDDIR_CONF"
     fi
 }
@@ -310,7 +313,7 @@ CoreCommand=
 GUIEnabled=0
 GUICommand=
 [HTTPDownload]
-URL_1=http://upd.emule-security.org/ipfilter.zip 
+URL_1=http://upd.emule-security.org/ipfilter.zip
 EOM
     printf "%s successfullly generated.\n" "${AMULE_CONF}"
 else
