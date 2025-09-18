@@ -81,6 +81,8 @@ AMULE_CONF=${AMULE_HOME}/amule.conf
 REMOTE_CONF=${AMULE_HOME}/remote.conf
 KAD_NODES_DAT_URL="http://upd.emule-security.org/nodes.dat"
 
+printf "@@@@ GREENDRAGON CUSTOM IMAGE @@@@\n"
+
 # Create configuration files if don't exist
 AMULE_GROUP="amule"
 if grep -q ":${AMULE_GID}:" /etc/group; then
