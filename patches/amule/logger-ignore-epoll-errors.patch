@@ -1,0 +1,22 @@
+From c2b3fc335a71d54a919922d2f0e78fbcf66d1d97 Mon Sep 17 00:00:00 2001
+From: RealGreenDragon <14246920+RealGreenDragon@users.noreply.github.com>
+Date: Sun, 11 Jan 2026 14:37:51 +0100
+Subject: [PATCH] Silence wxWidgets "epoll descriptor" errors in logfile and
+ stdout
+
+---
+ src/Logger.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/Logger.cpp b/src/Logger.cpp
+index 699205b85..fc669b453 100644
+--- a/src/Logger.cpp
++++ b/src/Logger.cpp
+@@ -128,6 +128,7 @@ void CLogger::AddLogLine(
+ 	bool toGUI)
+ {
+ 	wxString msg(str);
++	if (msg.Contains("epoll descriptor")) { return; }
+ // handle Debug messages
+ 	if (type != logStandard) {
+ 		if (!critical && !IsEnabled(type)) {
